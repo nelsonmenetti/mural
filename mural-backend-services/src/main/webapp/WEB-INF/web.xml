@@ -2,7 +2,7 @@
 	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>gps-contentbundle</display-name>
+	<display-name>mural-services</display-name>
 
 	<!-- REST Resource -->
 	<!-- <context-param> <param-name>resteasy.resources</param-name> <param-value>com.pearson.gps.contentbundle.rest.service.PackageService</param-value> 
@@ -11,7 +11,7 @@
 
     <context-param>
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
-		<param-value>/contentbundle</param-value>
+		<param-value>/mural</param-value>
 	</context-param>
 	
 	<context-param>
@@ -96,11 +96,10 @@
 		<url-pattern>/api-docs/*</url-pattern>
 	</servlet-mapping>
    
-	${resolucoes.servlet}
 	
 	<servlet-mapping>
 		<servlet-name>resteasy-servlet</servlet-name>
-		<url-pattern>/contentbundle/*</url-pattern>
+		<url-pattern>/mural/*</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>

@@ -2,8 +2,12 @@ package br.com.mural.entity;
 
 import java.util.List;
 
+import org.jongo.marshall.jackson.oid.Id;
+import org.jongo.marshall.jackson.oid.ObjectId;
+
 public class Enterprise {
 	
+	@ObjectId @Id 
 	private String id;
 	private String name;
 	private List<Address> addresses;

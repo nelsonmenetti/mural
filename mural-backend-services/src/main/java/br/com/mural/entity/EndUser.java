@@ -3,8 +3,12 @@ package br.com.mural.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.jongo.marshall.jackson.oid.Id;
+import org.jongo.marshall.jackson.oid.ObjectId;
+
 public class EndUser {
 
+	@ObjectId @Id 
 	private String id;
 	private String firstName;	
 	private String lastName;

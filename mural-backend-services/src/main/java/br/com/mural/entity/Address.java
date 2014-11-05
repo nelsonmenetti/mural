@@ -1,7 +1,14 @@
 package br.com.mural.entity;
 
+import org.jongo.marshall.jackson.oid.Id;
+import org.jongo.marshall.jackson.oid.ObjectId;
+
+import com.wordnik.swagger.annotations.ApiModel;
+
+@ApiModel( value = "Address", description = "This is a representation of a Address" )
 public class Address {
 
+	@ObjectId @Id 
 	private String id;
 	private String streetAddress;
 	private String extraAddressInfo;

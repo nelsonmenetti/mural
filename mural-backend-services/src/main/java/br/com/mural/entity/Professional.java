@@ -5,6 +5,9 @@ import java.util.List;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
 
+import com.wordnik.swagger.annotations.ApiModel;
+
+@ApiModel( value = "Professional", description = "This is a representation of a Professional" )
 public class Professional {
 
 	@ObjectId @Id 
@@ -18,6 +21,24 @@ public class Professional {
 	private String site;
 	private String portfolio;
 	
+	
+	public Professional() {
+		super();
+	}
+
+	public Professional(String name, List<Address> addresses, String cpf,
+			String birthDate, List<String> keywords, String serviceSummary,
+			String site, String portfolio) {
+		super();
+		this.name = name;
+		this.addresses = addresses;
+		this.cpf = cpf;
+		this.birthDate = birthDate;
+		this.keywords = keywords;
+		this.serviceSummary = serviceSummary;
+		this.site = site;
+		this.portfolio = portfolio;
+	}
 	
 	public String getId() {
 		return id;

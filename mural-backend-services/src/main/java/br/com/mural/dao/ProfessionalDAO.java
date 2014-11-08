@@ -1,5 +1,7 @@
 package br.com.mural.dao;
 
-public class ProfessionalDAO {
+import br.com.mural.entity.Professional;
+
+public class ProfessionalDAO extends DAO<Professional>{
 
 }

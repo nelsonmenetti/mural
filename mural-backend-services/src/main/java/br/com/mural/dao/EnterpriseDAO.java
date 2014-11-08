@@ -1,5 +1,7 @@
 package br.com.mural.dao;
 
-public class EnterpriseDAO {
+import br.com.mural.entity.Enterprise;
+
+public class EnterpriseDAO extends DAO<Enterprise> {
 
 }

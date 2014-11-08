@@ -5,6 +5,9 @@ import java.util.List;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
 
+import com.wordnik.swagger.annotations.ApiModel;
+
+@ApiModel( value = "Enterprise", description = "This is a representation of a Enterprise" )
 public class Enterprise {
 	
 	@ObjectId @Id 
@@ -17,6 +20,23 @@ public class Enterprise {
 	private String serviceSummary;
 	private String site;
 	private String portfolio;
+	
+	public Enterprise() {
+		super();
+	}
+	public Enterprise(String name, List<Address> addresses, String cnpj,
+			String startingDate, List<String> keywords, String serviceSummary,
+			String site, String portfolio) {
+		super();
+		this.name = name;
+		this.addresses = addresses;
+		this.cnpj = cnpj;
+		this.startingDate = startingDate;
+		this.keywords = keywords;
+		this.serviceSummary = serviceSummary;
+		this.site = site;
+		this.portfolio = portfolio;
+	}
 	public String getId() {
 		return id;
 	}

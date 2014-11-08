@@ -6,6 +6,9 @@ import java.util.List;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
 
+import com.wordnik.swagger.annotations.ApiModel;
+
+@ApiModel( value = "EndUser", description = "This is a representation of a EndUser" )
 public class EndUser {
 
 	@ObjectId @Id 
@@ -17,6 +20,21 @@ public class EndUser {
 	private Date birthDate;
 	private String email;
 	private String password;
+	
+	
+	
+	
+	public EndUser(String firstName, String lastName, List<Address> addresses,
+			String cpf, Date birthDate, String email, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.addresses = addresses;
+		this.cpf = cpf;
+		this.birthDate = birthDate;
+		this.email = email;
+		this.password = password;
+	}
 	public String getId() {
 		return id;
 	}

@@ -16,6 +16,19 @@ public class Address {
 	private String addressNumber;
 	private String zipcode;
 	
+	public Address() {
+		super();
+	}
+
+	public Address(String streetAddress, String extraAddressInfo,
+			String neighborhood, String addressNumber, String zipcode) {
+		super();
+		this.streetAddress = streetAddress;
+		this.extraAddressInfo = extraAddressInfo;
+		this.neighborhood = neighborhood;
+		this.addressNumber = addressNumber;
+		this.zipcode = zipcode;
+	}
 	public String getId() {
 		return id;
 	}

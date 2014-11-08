@@ -6,7 +6,9 @@ package br.com.mural.dao;
 
 import java.net.UnknownHostException;
 
+import org.bson.types.ObjectId;
 import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
 import br.com.mural.util.PropertiesUtil;
 
@@ -17,7 +19,7 @@ import com.mongodb.MongoClientURI;
 /**
  * The Class DAO.
  */
-public class DAO  {
+public class DAO<T>  {
 
 	
 	/** The mongo uri. */
@@ -78,6 +80,66 @@ public class DAO  {
 	 */
 	public static void setFakeConnection(DB fakeConnection) {
 		DAO.fakeConnection = fakeConnection;
+	}
+	
+	/**
+	 * Find.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the package content
+	 * @throws UnknownHostException
+	 *             the unknown host exception
+	 */
+	@SuppressWarnings("unchecked")
+	public T find(String id) throws UnknownHostException {
+		T result = null;
+		Jongo jongo = null;
+		jongo = getConnection();
+		MongoCollection mongoList = jongo.getCollection((((Class<T>)DAO.class).getName()));
+		Iterable<T> foundList = mongoList.find("{_id: #}",new ObjectId(id)).as(((Class<T>)DAO.class));
+		if (foundList.iterator().hasNext()) {
+			result = foundList.iterator().next();
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * Save or update a Package.
+	 *
+	 * @param packageContent
+	 *            the package content
+	 * @return the package content
+	 * @throws UnknownHostException
+	 *             the unknown host exception
+	 */
+	@SuppressWarnings("unchecked")
+	public T saveOrUpdate(T t)
+			throws UnknownHostException {
+		Jongo jongo = null;
+		jongo = getConnection();
+		MongoCollection mongoList = jongo.getCollection((((Class<T>)DAO.class).getName()));
+		mongoList.save(t);
+		return t;
+	}
+	
+	
+	/**
+	 * Delete a Package.
+	 *
+	 * @param packageContent
+	 *            the package content
+	 * @throws UnknownHostException
+	 *             the unknown host exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void delete(String id)
+			throws UnknownHostException {
+		Jongo jongo = null;
+		jongo = getConnection();
+		MongoCollection mongoList = jongo.getCollection((((Class<T>)DAO.class).getName()));
+		mongoList.remove(new ObjectId(id));
 	}
 	
 	

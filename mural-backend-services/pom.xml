@@ -1,18 +1,140 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>mural.services</groupId>
-  <artifactId>mural-backend-services</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>muralservices</name>
-  <description>Mural project backend Rest /Soap Services</description>
-  
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>mural.services</groupId>
+	<artifactId>mural-backend-services</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>muralservices</name>
+	<description>Mural project backend Rest /Soap Services</description>
+
+	<profiles>
+		<profile>
+			<id>production</id>
+			<properties>
+				<filter.name>production</filter.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>staging</id>
+			<properties>
+				<filter.name>staging</filter.name>
+			</properties>
+		</profile>
+
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>local</id>
+			<properties>
+				<filter.name>local</filter.name>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<filters>
+			<filter>${basedir}/src/main/filters/${filter.name}.properties</filter>
+		</filters>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<!-- Turn on filtering. If you want to filter more files you can use 
+					wildcards like **/*.xml -->
+				<filtering>true</filtering>
+				<includes>
+					<include>messaging.properties</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+					<failOnMissingWebXml>true</failOnMissingWebXml>
+					<warName>${project.artifactId}-${project.version}-${filter.name}</warName>
+					<webResources>
+						<resource>
+							<directory>${basedir}/src/main/webapp</directory>
+							<!-- Turn on filtering. If you want to filter more files you can use 
+								wildcards like **/*.xml -->
+							<filtering>true</filtering>
+							<includes>
+								<include>WEB-INF/web.xml</include>
+								<include>index.html</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.11.v20130520</version>
+				<configuration>
+					<webAppSourceDirectory>${project.basedir}/target/${project.artifactId}-${project.version}</webAppSourceDirectory>
+					<war>target/${project.artifactId}-${project.version}-${filter.name}.war</war>
+					<webDefaultXml>${project.basedir}/conf/jetty/webdefault.xml</webDefaultXml>
+					<stopPort>8079</stopPort>
+					<stopKey>stopit</stopKey>
+					<webApp>
+						<contextPath>${appserver.home}</contextPath>
+					</webApp>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>60000</maxIdleTime>
+							<confidentialPort>8443</confidentialPort>
+						</connector>
+					</connectors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<properties>
 		<swagger-version>1.3.0</swagger-version>
 	</properties>
-	
-  <dependencies>
+
+	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -206,5 +328,5 @@
 			<version>${swagger-version}</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>

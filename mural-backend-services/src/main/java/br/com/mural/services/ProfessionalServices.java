@@ -77,7 +77,7 @@ public class ProfessionalServices extends Service{
 	@PathParam("/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@ApiOperation(httpMethod = "DELETE", nickname = "deleteProfessional", value = "", notes = "", produces = "application/json,application/xml", response = Response.class)
-	public Response deleteProfessional(String id){
+	public Response deleteProfessional(@PathParam(value="id")String id){
 		UUID requestid = UUID.randomUUID();
 		try {		
 			if (dao.find(id) != null){

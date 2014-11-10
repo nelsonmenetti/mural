@@ -84,7 +84,7 @@ public class UserServices extends Service {
 	@PathParam("/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@ApiOperation(httpMethod = "DELETE", nickname = "deleteUser", value = "", notes = "", produces = "application/json,application/xml", response = Response.class)
-	public Response deleteUser(String id) {
+	public Response deleteUser(@PathParam(value="id") String id) {
 		UUID requestid = UUID.randomUUID();
 		try {		
 			if (dao.find(id) != null){
